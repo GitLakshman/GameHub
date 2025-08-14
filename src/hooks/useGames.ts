@@ -1,0 +1,33 @@
+import { useEffect, useState } from "react";
+import apiClient, { CanceledError } from "../services/api-client";
+
+interface Game {
+  id: number;
+  name: string;
+}
+
+interface FetchGamesReponse {
+  count: number;
+  results: Game[];
+}
+const useGames = () => {
+  const [games, setGames] = useState<Game[]>([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const contoller = new AbortController();
+    apiClient
+      .get<FetchGamesReponse>("/games", { signal: contoller.signal })
+      .then((res) => setGames(res.data.results))
+      .catch((err) => {
+        if (err instanceof CanceledError) return;
+        setError(err.message);
+      });
+
+    return () => contoller.abort();
+  }, []);
+
+  return { games, error };
+};
+
+export default useGames;
