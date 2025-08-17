@@ -7,10 +7,9 @@ import getOptimizedImages from "../services/image-url";
 interface Props {
   game: Game;
 }
-
 const GameCard = ({ game }: Props) => {
   return (
-    <Card width="300px" borderRadius={10} overflow={"hidden"}>
+    <Card>
       <Image src={getOptimizedImages(game.background_image)} alt={game.name} />
       <CardBody>
         <Heading fontSize="lg">{game.name}</Heading>
