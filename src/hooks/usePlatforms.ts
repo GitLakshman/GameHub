@@ -1,7 +1,6 @@
 import platforms from "../data/platforms";
-import useData from "./useData";
 
-interface Platfrom {
+export interface Platfrom {
   id: number;
   name: string;
   slug: string;
